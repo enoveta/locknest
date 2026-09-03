@@ -1,0 +1,220 @@
+
+
+######## Splash ########
+navs: onboarding
+  Your World. Secured.
+  9:41
+
+
+######## Onboarding ########
+navs: passcode, dashboard
+  Secure.
+  Private.
+  Peace of mind.
+  LockNest protects your apps, your data, and your moments with advanced security.
+  Get Started
+  Skip
+
+
+######## Passcode ########
+navs: dashboard
+  Create Passcode
+  Set a 6-digit passcode to protect your privacy.
+  Home
+  Apps
+  Modes
+  Security
+  Settings
+
+
+######## BottomNav ########
+navs: 
+  Home
+  Apps
+  Modes
+  Security
+  Settings
+
+
+######## Voice ########
+navs: 
+  Put LockNest in Stay Mode.
+  Enable Guest Mode.
+  Lock WhatsApp.
+  Show Security Events.
+  LockNest Voice Assistant
+  |
+  Say a command…
+  Example commands
+  Good Morning,
+
+
+######## Dashboard ########
+navs: notifications, securityevents
+  Good Morning,
+  Imfurayase Christian
+  Everything is secure
+  All systems active and protecting your device
+  Overview
+  Locked Apps
+  Stay Mode
+  Guest Mode
+  Security Events
+  Voice Assistant
+  Try: "Put LockNest in Stay Mode"
+  Recent Activity
+  View all
+  WhatsApp locked
+  Intruder detected
+  Stay mode enabled
+
+
+######## AppLock ########
+navs: dashboard, applocked, applock
+  App Lock
+  📭
+  No apps in this category
+  Choose App to Lock
+  Search apps...
+  All apps are already locked
+  Lock
+
+
+######## AppLocked ########
+navs: applock, dashboard
+  💬
+  WhatsApp
+  This app is locked
+  Enter your passcode
+  Forgot passcode?
+  Stay Mode
+
+
+######## Stay ########
+navs: dashboard
+  Stay Mode
+  Allowed Apps
+  +
+  Add
+  Add Allowed App
+  Stop Stay Mode?
+  All restricted apps will become accessible again.
+  Cancel
+  Stop
+
+
+######## Guest ########
+navs: dashboard
+  Guest Mode
+  Active Session
+  Started
+  Expires in
+  Allowed Apps
+  + Add
+  +
+  Stop Guest Mode
+  Enable Guest Mode
+  Add Allowed App
+  Add
+  Stop Guest Mode?
+  The guest session will end and all apps will be accessible.
+  Cancel
+  Stop
+
+
+######## Intruder ########
+navs: securityevents
+  Intruder Detected
+  Today, 07:12 AM
+  DETECTED
+  !
+  2 Failed attempts
+  Wrong passcode entered
+  App
+  Time
+  Location
+  View All Events
+  Intruder detected
+  Wrong passcode
+  App unlocked
+
+
+######## Events ########
+navs: dashboard
+  Intruder detected
+  Wrong passcode
+  App unlocked
+  Stay mode enabled
+  Guest mode enabled
+  Instagram locked
+  Security Events
+  🔍
+  No events found
+
+
+######## Settings ########
+navs: profile, applock, staymode, guestmode, intruder, passcode, securityevents, notifications
+  Settings
+  👤
+  Security
+  App Lock
+  Stay Mode
+  Guest Mode
+  Intruder Detection
+  Change Passcode
+  🔐
+  Biometric Lock
+  ⚠️
+  Security Events
+  6 Events
+  Preferences
+  🔔
+  Notifications
+  Theme
+  View All Notifications
+  About LockNest
+  Privacy Policy
+  Terms of Service
+  Help & Support
+  Rate LockNest
+  Share LockNest
+
+
+######## Profile ########
+navs: 
+  About LockNest
+  Privacy Policy
+  Terms of Service
+  Help & Support
+  Rate LockNest
+  Share LockNest
+  Profile
+  👤
+  Imfurayase Christian
+  Device ID: LN-23A8BF7
+  Enovela Inc.
+  General
+
+
+######## Notifs ########
+navs: dashboard, intruder
+  Notifications
+  Mark all read
+  🔔
+  No notifications
+
+
+######## AROUND EXAMPLE COMMANDS ########
+e:E,lineNumber:205,columnNumber:41},this),n!==`listening`&&i.length>0&&`"`]},void 0,!0,{fileName:E,lineNumber:203,columnNumber:13},this):(0,x.jsxDEV)(`p`,{className:`text-sm text-white/25 italic`,children:`Say a command…`},void 0,!1,{fileName:E,lineNumber:209,columnNumber:13},this)},void 0,!1,{fileName:E,lineNumber:198,columnNumber:9},this),n===`idle`&&(0,x.jsxDEV)(`div`,{className:`w-full`,children:[(0,x.jsxDEV)(`p`,{className:`text-[10px] text-white/30 uppercase tracking-wider mb-2`,children:`Example commands`},void 0,!1,{fileName:E,lineNumber:216,columnNumber:13},this),(0,x.jsxDEV)(`div`,{className:`flex flex-col gap-1.5`,children:ue.map(e=>(0,x.jsxDEV)(`div`,{className:`flex items-center gap-2 px-3 py-2 rounded-xl`,style:{background:`rgba(255,255,255,0.03)`},children:[(0,x.jsxDEV)(`svg`,{width:`12`,height:`12`,viewBox:`0 0 24 24`,fill:`none`,stroke:`rgba(59,122,255,0.6)`,strokeWidth:`2`,children:[(0,x.jsxDEV)(`path`,{d:`M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z`},void 0,!1,{fileName:E,lineNumber:221,columnNumber:21},this),(0,x.jsxDEV)(`path`,{d:`M19 10v2a7 7 0 01-14 0v-2`},void 0,!1,{fileName:E,lineNumber:222,columnNumber:21},this)]},void 0,!0,{fileName:E,lineNumber:220,columnNumber:19},this),(0,x.jsxDEV)(`p`,{className:`text-xs text-white/40`,children:[`"`,e.label,`"`]},void 0,!0,{fileName:E,lineNumber:224,columnNumber:19},this)]},e.action,!0,{fileName:E,lineNumber:219,columnNumber:17},this))},void 0,!1,{fileName:E,lineNumber:217,columnNumber:13},this)]},void 0,!0,{fileName:E,lineNumber:215,columnNumber:11},this)]},void 0,!0,{fileName:E,lineNumber:79,columnNumber:7},this),(0,x.jsxDEV)(`style`,{children:`
+        @keyframes wave-bar {
+          from { transform: scaleY(0.4); }
+          to { transform: scaleY(1); }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `},void 0,!1,{fileName:E,lineNumber:232,columnNumber:7},this)]},void 0,!0,{fileName:E,lineNumber:71,columnNumber:5},this)}var D=`/workspaces/default/.publishing/src/screens/DashboardScreen.tsx`;function me({nav:e,appState:t,updateState:n,unreadCount:r}){let{lockedApps:i,stayModeActive:a,guestModeActive:o,notifications:s}=t,[c,l]=(0,_.useState)(!1),u=s.filter(e=>e.type===`intruder`||e.type===`passcode`).length;return(0,x.jsxDEV)(`div`,{className:`absolute inset-0 flex flex-col overflow-y-auto`,style:{background:`#09090f`},children:[(0,x.jsxDEV)(re,{},void 0,!1,{fileName:D,lineNumber:21,columnNumber:7},this),(0,x.jsxDEV)(`div`,{className:`px-5 pt-3 pb-28`,children:[(0,x.jsxDEV)(`div`,{className:`flex items-start justify-between mb-5`,children:[(0,x.jsxDEV)(`div`,{children:[(0,x.jsxDEV)(`p`,{className:`text-xs text-white/40 mb-0.5`,children:`Good Morning,`},void 0,!1,{fileName:D,lineNumber:27,columnNumber:13},this),(0,x.jsxDEV)(`h1`,{className:`text-xl font-semibold text-white`,children:`Imfurayase Christian`},void 0,!1,{fileName:D,lineNumber:28,columnNumber:13},this)]},void 0,!0,{fileName:
+
+######## AROUND OVERVIEW ########
+Overview`},void 0,!1,{fileName:D,lineNumber:82,columnNumber:9},this),(0,x.jsxDEV)(`div`,{className:`grid grid-cols-2 gap-3 mb-6`,children:[{icon:`🔒`,label:`Locked Apps`,value:String(i.length),color:`#3b7aff`,bg:`rgba(59,122,255,0.1)`,screen:`applock`},{icon:`🛡️`,label:`Stay Mode`,value:a?`Active`:`Inactive`,color:a?`#22c55e`:`#666680`,bg:a?`rgba(34,197,94,0.1)`:`rgba(100,100,128,0.1)`,screen:`staymode`},{icon:`👥`,label:`Guest Mode`,value:o?`Active`:`Inactive`,color:o?`#a855f7`:`#666680`,bg:o?`rgba(168,85,247,0.1)`:`rgba(100,100,128,0.1)`,screen:`guestmode`},{icon:`⚠️`,label:`Security Events`,value:String(u),color:`#ef4444`,bg:`rgba(239,68,68,0.1)`,screen:`securityevents`}].map(({icon:t,label:n,value:r,color:i,bg:a,screen:o})=>(0,x.jsxDEV)(`button`,{onClick:()=>e(o),className:`rounded-2xl p-4 text-left transition-opacity active:opacity-70`,style:{background:a,border:`1px solid ${i}22`},children:[(0,x.jsxDEV)(`span`,{className:`text-2xl mb-2 block`,children:t},void 0,!1,{fileName:D,lineNumber:96,columnNumber:15},this),(0,x.jsxDEV)(`p`,{className:`text-xs text-white/50 mb-1`,children:n},void 0,!1,{fileName:D,lineNumber:97,columnNumber:15},this),(0,x.jsxDEV)(`p`,{className:`text-lg font-bold`,style:{color:i},children:r},void 0,!1,{fileName:D,lineNumber:98,columnNumber:15},this)]},n,!0,{fileName:D,lineNumber:90,columnNumber:13},this))},void 0,!1,{fileName:D,lineNumber:83,columnNumber:9},this),(0,x.jsxDEV)(`button`,{onClick:()=>l(!0),className:`w-full flex items-center gap-3 rounded-2xl p-3.5 mb-5 transition-all active:opacity-80`,style:{background:`linear-gradient(135deg, rgba(59,122,255,0.1), rgba(59,122,255,0.04))`,border:`1px solid rgba(59,122,255,0.2)`},children:[(0,x.jsxDEV)(`div`,{className:`flex items-center justify-center rounded-xl flex-shrink-0`,style:{width:36,height:36,background:`rgba(59,122,255,0.15)`,border:`1px solid rgba(59,122,255,0.3)`},children:(0,x.jsxDEV)(`svg`,{width:`16`,height:`16`,viewBox:`0 0 24 24`,fill:`none`,stroke:`#3b7aff`,strokeWidth:`

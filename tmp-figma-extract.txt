@@ -1,0 +1,230 @@
+
+========== src/screens/SplashScreen.tsx idx=388266 ==========
+  | Your World. Secured.
+  | 9:41
+  | Secure.
+  | Private.
+  | Peace of mind.
+  | LockNest protects your apps, your data, and your moments with advanced security.
+  | Get Started
+  | Skip
+  | Create Passcode
+  | Set a 6-digit passcode to protect your privacy.
+
+========== src/screens/OnboardingScreen.tsx idx=392408 ==========
+  | Secure.
+  | Private.
+  | Peace of mind.
+  | LockNest protects your apps, your data, and your moments with advanced security.
+  | Get Started
+  | Skip
+  | Create Passcode
+  | Set a 6-digit passcode to protect your privacy.
+
+========== src/screens/PasscodeScreen.tsx idx=395864 ==========
+  | Create Passcode
+  | Set a 6-digit passcode to protect your privacy.
+  | LockNest Voice Assistant
+
+========== src/screens/DashboardScreen.tsx idx=413603 ==========
+  | Good Morning,
+  | Imfurayase Christian
+  | Everything is secure
+  | All systems active and protecting your device
+  | Overview
+  | Voice Assistant
+  | Try: "Put LockNest in Stay Mode"
+  | Recent Activity
+  | View all
+  | App Lock
+  | 📭
+  | No apps in this category
+
+========== src/screens/AppLockScreen.tsx idx=422875 ==========
+  | App Lock
+  | 📭
+  | No apps in this category
+  | Choose App to Lock
+  | All apps are already locked
+  | Lock
+  | 💬
+  | WhatsApp
+  | This app is locked
+  | Enter your passcode
+  | Forgot passcode?
+  | Stay Mode
+
+========== src/screens/AppLockedScreen.tsx idx=431558 ==========
+  | 💬
+  | WhatsApp
+  | This app is locked
+  | Enter your passcode
+  | Forgot passcode?
+  | Stay Mode
+  | Allowed Apps
+  | +
+  | Add
+  | Add Allowed App
+  | Stop Stay Mode?
+  | All restricted apps will become accessible again.
+  | Cancel
+  | Stop
+
+========== src/screens/StayModeScreen.tsx idx=435388 ==========
+  | Stay Mode
+  | Allowed Apps
+  | +
+  | Add
+  | Add Allowed App
+  | Stop Stay Mode?
+  | All restricted apps will become accessible again.
+  | Cancel
+  | Stop
+  | Guest Mode
+  | Active Session
+  | Started
+
+========== src/screens/GuestModeScreen.tsx idx=445184 ==========
+  | Guest Mode
+  | Active Session
+  | Started
+  | Expires in
+  | Allowed Apps
+  | + Add
+  | +
+  | Stop Guest Mode
+  | Enable Guest Mode
+  | Add Allowed App
+  | Add
+  | Stop Guest Mode?
+  | The guest session will end and all apps will be accessible.
+  | Cancel
+  | Stop
+  | Intruder Detected
+  | Today, 07:12 AM
+
+========== src/screens/IntruderScreen.tsx idx=457965 ==========
+  | Intruder Detected
+  | Today, 07:12 AM
+  | DETECTED
+  | !
+  | 2 Failed attempts
+  | Wrong passcode entered
+  | View All Events
+  | Security Events
+  | 🔍
+  | No events found
+  | Settings
+  | 👤
+  | Security
+
+========== src/screens/SecurityEventsScreen.tsx idx=463635 ==========
+  | Security Events
+  | 🔍
+  | No events found
+  | Settings
+  | 👤
+  | Security
+  | 🔐
+  | Biometric Lock
+  | ⚠️
+  | 6 Events
+  | Preferences
+  | 🔔
+  | Notifications
+  | Theme
+  | View All Notifications
+
+========== src/screens/SettingsScreen.tsx idx=468873 ==========
+  | Settings
+  | 👤
+  | Security
+  | 🔐
+  | Biometric Lock
+  | ⚠️
+  | Security Events
+  | 6 Events
+  | Preferences
+  | 🔔
+  | Notifications
+  | Theme
+  | View All Notifications
+  | Profile
+  | Imfurayase Christian
+  | Device ID: LN-23A8BF7
+  | Enovela Inc.
+  | General
+  | Mark all read
+
+========== src/screens/ProfileScreen.tsx idx=477536 ==========
+  | Profile
+  | 👤
+  | Imfurayase Christian
+  | Device ID: LN-23A8BF7
+  | Enovela Inc.
+  | General
+  | Notifications
+  | Mark all read
+  | 🔔
+  | No notifications
+
+========== src/screens/NotificationsScreen.tsx idx=481098 ==========
+  | Notifications
+  | Mark all read
+  | 🔔
+  | No notifications
+
+========== src/components/BottomNav.tsx idx=399260 ==========
+  | LockNest Voice Assistant
+  | |
+  | Say a command…
+  | Example commands
+
+========== src/components/VoiceAssistant.tsx idx=405337 ==========
+  | LockNest Voice Assistant
+  | |
+  | Say a command…
+  | Example commands
+  | Good Morning,
+  | Imfurayase Christian
+  | Everything is secure
+  | All systems active and protecting your device
+  | Overview
+
+========== src/App.tsx idx=484902 ==========
+
+========== COLORS ==========
+39	#3b7aff
+23	#111118
+21	#ef4444
+15	#09090f
+13	#22c55e
+12	#a855f7
+11	#1a1a28
+4	#f97316
+4	#555
+3	#16a34a
+2	#000000
+2	#5b9aff
+2	#666680
+2	#444
+2	#333
+2	#1a1a24
+1	#e6e6e6
+1	#ffffff
+1	#3b7aff88
+1	#0d0d18
+1	#1e3a8a
+1	#7c2d12
+1	#1a1a2e
+1	#2a2a4a
+1	#7c3aed
+1	#ef444455
+1	#1a0a0a
+1	#2a1010
+1	#222
+1	#2a2a2a
+1	#dc2626
+
+========== APP CHUNK ==========
+src/App.tsx`,je=[{name:`WhatsApp`,emoji:`💬`},{name:`Facebook`,emoji:`📘`},{name:`Instagram`,emoji:`📸`},{name:`Gallery`,emoji:`🖼️`},{name:`Messages`,emoji:`💬`},{name:`Chrome`,emoji:`🌐`},{name:`YouTube`,emoji:`▶️`},{name:`Gmail`,emoji:`📧`},{name:`Twitter`,emoji:`🐦`},{name:`Snapchat`,emoji:`👻`},{name:`TikTok`,emoji:`🎵`},{name:`Spotify`,emoji:`🎧`},{name:`Telegram`,emoji:`✈️`},{name:`Photos`,emoji:`📷`}],Me=[{id:`1`,type:`intruder`,title:`Intruder Detected`,body:`2 failed unlock attempts on WhatsApp at 07:12 AM`,time:`Just now`,read:!1},{id:`2`,type:`passcode`,title:`Wrong Passcode`,body:`Someone entered the wrong passcode for Instagram`,time:`5 min ago`,read:!1},{id:`3`,type:`unlock`,title:`App Unlocked`,body:`WhatsApp was successfully unlocked`,time:`1 hr ago`,read:!0},{id:`4`,type:`mode`,title:`Stay Mode Enabled`,body:`Stay Mode is now active — only allowed apps accessible`,time:`2 hr ago`,read:!0},{id:`5`,type:`system`,title:`LockNest Updated`,body:`App updated to version 2.4.1 with new security features`,time:`Yesterday`,read:!0}];function Ne(){let[e,t]=(0,_.useState)(`splash`),[n,r]=(0,_.useState)({lockedApps:[`WhatsApp`,`Facebook`,`Instagram`,`Gallery`,`YouTube`],stayModeActive:!0,guestModeActive:!0,biometricEnabled:!0,notifications:Me,theme:`dark`}),i=e=>t(e),a=e=>r(t=>({...t,...e})),o=()=>a({notifications:n.notifications.map(e=>({...e,read:!0}))}),s=n.notifications.filter(e=>!e.read).length,c=e=>(0,x.jsxDEV)(`div`,{className:`min-h-full flex items-center justify-center bg-[#09090f]`,children:(0,x.jsxDEV)(`div`,{className:`relative overflow-hidden`,style:{width:`390px`,minHeight:`844px`,background:`#09090f`,borderRadius:`44px`,boxShadow:`0 0 0 1px rgba(255,255,255,0.06), 0 40px 80px rgba(0,0,0,0.8)`},children:e},void 0,!1,{fileName:Ae,lineNumber:99,columnNumber:7},this)},void 0,!1,{fileName:Ae,lineNumber:98,columnNumber:5},this),l={nav:i,appState:n,updateState:a,unreadCount:s,markNotificationsRead:o};switch(e){case`splash`:return c((0,x.jsxDEV)(te,{nav:i},void 0,!1,{fileName:Ae,lineNumber:118,columnNumber:22},this));case`onboarding`:return c((0,x.jsxDEV)(ae,{nav:i},void 0,!1,{fileName:Ae,lineNumber:120,columnNumber:22},this));case`passcode`:return c((0,x.jsxDEV)(C,{nav:i},void 0,!1,{fileName:Ae,lineNumber:122,columnNumber:22},this));case`dashboard`:return c((0,x.jsxDEV)(me,{...l},void 0,!1,{fileName:Ae,lineNumber:124,columnNumber:22},this));case`applock`:return c((0,x.jsxDEV)(he,{...l},void 0,!1,{fileName:Ae,lineNumber:126,columnNumber:22},this));case`applocked`:return c((0,x.jsxDEV)(_e,{nav:i},void 0,!1,{fileName:Ae,lineNumber:128,columnNumber:22},this));case`staymode`:return c((0,x.jsxDEV)(ye,{...l},void 0,!1,{fileName:Ae,lineNumber:130,columnNumber:22},this));case`guestmode`:return c((0,x.jsxDEV)(be,{...l},void 0,!1,{fileName:Ae,lineNumber:132,columnNumber:22},this));case`intruder`:return c((0,x.jsxDEV)(xe,{nav:i},void 0,!1,{fileName:Ae,lineNumber:134,columnNumber:22},this));case`securityevents`:return c((0,x.jsxDEV)(Ce,{...l},void 0,!1,{fileName:Ae,lineNumber:136,columnNumber:22},this));case`settings`:return c((0,x.jsxDEV)(we,{...l},void 0,!1,{fileName:Ae,lineNumber:138,columnNumber:22},this));case`profile`:return c((0,x.jsxDEV)(Ee,{nav:i},void 0,!1,{fileName:Ae,lineNumber:140,columnNumber:22},this));case`notifications`:return c((0,x.jsxDEV)(ke,{...l},void 0,!1,{fileName:Ae,lineNumber:142,columnNumber:22},this))}}var Pe=`/workspaces/default/.publishing/src/main.tsx`;v.createRoot(document.getElementById(`root`)).render((0,x.jsxDEV)(_.StrictMode,{children:(0,x.jsxDEV)(Ne,{},void 0,!1,{fileName:Pe,lineNumber:8,columnNumber:5},void 0)},void 0,!1,{fileName:Pe,lineNumber:7,columnNumber:3},void 0));
