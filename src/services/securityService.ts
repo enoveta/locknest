@@ -3,6 +3,7 @@ import {
   createIntruderEvidence,
   createSecurityEvent,
   getIntruderEvidenceByEvent,
+  getLatestIntruderEvidence,
   getSecurityEventsByUser,
   type SecurityEvent,
 } from '../database/repositories/securityRepository';
@@ -69,6 +70,7 @@ export async function recordFailedUnlock(
   userId: number,
   packageName: string | undefined,
   attemptCount: number,
+  maxAttempts = 3,
 ): Promise<number> {
   const eventId = await createSecurityEvent(
     userId,
@@ -78,7 +80,7 @@ export async function recordFailedUnlock(
   );
   await createAuthAttempt(eventId, 'passcode', false, packageName);
 
-  if (attemptCount >= 2) {
+  if (attemptCount >= maxAttempts) {
     const intruderId = await createSecurityEvent(
       userId,
       EVENT_TYPES.INTRUDER_DETECTED,
@@ -100,6 +102,10 @@ export async function recordIntruderEvidence(
 
 export async function getEvidenceForEvent(eventId: number) {
   return getIntruderEvidenceByEvent(eventId);
+}
+
+export async function getLatestEvidence(userId: number) {
+  return getLatestIntruderEvidence(userId);
 }
 
 export function eventLabel(eventType: string): string {

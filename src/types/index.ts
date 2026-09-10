@@ -21,6 +21,7 @@ export type AppSettings = {
   voiceEnabled: boolean;
   theme: 'dark' | 'light';
   displayName: string;
+  maxFailedAttempts: number;
 };
 
 export type VoicePhase =

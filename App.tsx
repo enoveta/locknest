@@ -1,4 +1,3 @@
-import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
 
@@ -6,7 +5,6 @@ import { initializeDatabase } from './src/database';
 import { AppNavigator } from './src/navigation/AppNavigator';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
   const [databaseReady, setDatabaseReady] = useState(false);
   const [databaseError, setDatabaseError] = useState<string | null>(null);
 
@@ -31,7 +29,6 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       {databaseError ? null : <AppNavigator />}
     </SafeAreaProvider>
   );

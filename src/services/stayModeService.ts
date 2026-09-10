@@ -16,6 +16,7 @@ import {
   findCatalogApp,
 } from '../constants/apps';
 import {EVENT_TYPES} from '../constants/events';
+import {syncAccessPolicy} from './installedAppsService';
 
 export async function isStayModeActive(userId: number): Promise<boolean> {
   const session = await getActiveStaySession(userId);
@@ -25,6 +26,7 @@ export async function isStayModeActive(userId: number): Promise<boolean> {
 export async function getStayAllowedNames(userId: number): Promise<string[]> {
   const session = await getActiveStaySession(userId);
   if (!session) {
+    await syncAccessPolicy(null, []);
     return DEFAULT_STAY_ALLOWED;
   }
 
@@ -33,9 +35,14 @@ export async function getStayAllowedNames(userId: number): Promise<string[]> {
     return DEFAULT_STAY_ALLOWED;
   }
 
-  return rows
+  const allowedNames = rows
     .map(row => findCatalogApp(row.package_name)?.name ?? row.package_name)
     .filter(Boolean);
+  await syncAccessPolicy(
+    'stay',
+    rows.map(row => row.package_name),
+  );
+  return allowedNames;
 }
 
 export async function activateStayMode(
@@ -53,6 +60,10 @@ export async function activateStayMode(
       catalog?.packageName ?? name.toLowerCase(),
     );
   }
+  await syncAccessPolicy(
+    'stay',
+    allowedNames.map(name => findCatalogApp(name)?.packageName ?? name),
+  );
 
   await createSecurityEvent(
     userId,
@@ -64,6 +75,7 @@ export async function activateStayMode(
 
 export async function deactivateStayMode(userId: number): Promise<void> {
   await endActiveStaySession(userId);
+  await syncAccessPolicy(null, []);
   await createSecurityEvent(
     userId,
     EVENT_TYPES.STAY_DEACTIVATED,

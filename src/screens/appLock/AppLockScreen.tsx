@@ -8,6 +8,8 @@ import { colors, sharedStyles, spacing } from '../../theme';
 import { listProtectedApps, lockApp, unlockApp } from '../../services/appLockService';
 import { ensureLocalUser } from '../../services/userService';
 import type { ProtectedApp } from '../../database/repositories/protectedAppRepository';
+import { openAccessibilitySettings, syncLockedPackages } from '../../services/installedAppsService';
+import { accessibilityHelpText } from '../../utils/unlockPolicy';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AppLock'>;
 
@@ -15,6 +17,7 @@ export function AppLockScreen({ navigation }: Props) {
   const [query, setQuery] = useState('');
   const [apps, setApps] = useState<ProtectedApp[]>([]);
   const [userId, setUserId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const loadApps = async () => {
     try {
@@ -22,8 +25,13 @@ export function AppLockScreen({ navigation }: Props) {
       setUserId(user.id);
       const protectedApps = await listProtectedApps(user.id);
       setApps(protectedApps);
-    } catch (error) {
-      console.warn('Failed to load protected apps:', error);
+      await syncLockedPackages(
+        protectedApps.filter(app => app.is_locked === 1).map(app => app.package_name),
+      );
+      setError(null);
+    } catch (loadError) {
+      setError('Unable to load protected apps. Try again from this device.');
+      console.warn('Failed to load protected apps:', loadError);
     }
   };
 
@@ -79,6 +87,11 @@ export function AppLockScreen({ navigation }: Props) {
           placeholderTextColor={colors.textMuted}
           style={styles.search}
         />
+        <Pressable onPress={openAccessibilitySettings} style={styles.accessibilityButton}>
+          <Text style={styles.accessibilityText}>Enable app blocking in Android Settings</Text>
+        </Pressable>
+        <Text style={styles.helpText}>{accessibilityHelpText()}</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {filteredApps.map(app => {
@@ -121,6 +134,29 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     color: colors.text,
     marginBottom: 16,
+  },
+  accessibilityButton: {
+    marginBottom: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: 'rgba(77,163,255,0.15)',
+  },
+  accessibilityText: {
+    color: colors.primarySoft,
+    textAlign: 'center',
+    fontWeight: '700',
+  },
+  helpText: {
+    color: colors.textMuted,
+    fontSize: 12,
+    lineHeight: 18,
+    marginBottom: 12,
+  },
+  errorText: {
+    color: colors.red,
+    fontSize: 13,
+    fontWeight: '600',
+    marginBottom: 12,
   },
   appRow: {
     marginBottom: 12,

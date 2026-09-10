@@ -8,6 +8,7 @@ export type UserSettingsRow = {
   notifications_enabled: number;
   voice_enabled: number;
   theme: string;
+  max_failed_attempts: number;
   created_at: string;
   updated_at: string;
 };
@@ -27,10 +28,11 @@ export async function createUserSettings(
         notifications_enabled,
         voice_enabled,
         theme,
+        max_failed_attempts,
         created_at,
         updated_at
       )
-      VALUES (?, ?, 1, 1, 1, 'dark', ?, ?);
+      VALUES (?, ?, 1, 1, 1, 'dark', 3, ?, ?);
     `,
     [userId, displayName, now, now],
   );
@@ -64,6 +66,7 @@ export async function updateUserSettings(
     notificationsEnabled?: boolean;
     voiceEnabled?: boolean;
     theme?: string;
+    maxFailedAttempts?: number;
   },
 ): Promise<void> {
   const current = await getUserSettings(userId);
@@ -81,6 +84,7 @@ export async function updateUserSettings(
         notifications_enabled = ?,
         voice_enabled = ?,
         theme = ?,
+        max_failed_attempts = ?,
         updated_at = ?
       WHERE user_id = ?;
     `,
@@ -102,6 +106,7 @@ export async function updateUserSettings(
           ? 1
           : 0,
       patch.theme ?? current.theme,
+      patch.maxFailedAttempts ?? current.max_failed_attempts ?? 3,
       now,
       userId,
     ],

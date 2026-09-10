@@ -1,4 +1,5 @@
 import {findCatalogAppFuzzy} from '../constants/apps';
+import {loadSettings} from './settingsService';
 import type {VoiceCommandResult} from '../types';
 import {activateStayMode, deactivateStayMode} from './stayModeService';
 import {activateGuestMode} from './guestModeService';
@@ -21,6 +22,14 @@ export async function executeVoiceCommand(
   userId: number,
   raw: string,
 ): Promise<VoiceCommandResult> {
+  const settings = await loadSettings(userId);
+  if (!settings.voiceEnabled) {
+    return {
+      ok: false,
+      message: 'Voice assistant is turned off in Settings.',
+    };
+  }
+
   const text = normalize(raw);
 
   if (!text) {

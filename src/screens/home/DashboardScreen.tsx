@@ -83,7 +83,17 @@ export function DashboardScreen({ navigation }: Props) {
             <Text style={styles.title}>Dashboard</Text>
           </View>
           <View style={styles.micButton}>
-            <Text style={styles.micText} onPress={() => navigation.navigate('VoiceAssistant')}>🎙️</Text>
+            <Text
+              style={styles.micText}
+              onPress={() => {
+                if (state?.settings.voiceEnabled === false) {
+                  navigation.navigate('Settings');
+                  return;
+                }
+                navigation.navigate('VoiceAssistant');
+              }}>
+              🎙️
+            </Text>
           </View>
         </View>
 

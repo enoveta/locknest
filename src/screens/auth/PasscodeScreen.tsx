@@ -1,20 +1,49 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
 import { LockNestButton } from '../../components/LockNestButton';
 import { colors, sharedStyles, spacing, typography } from '../../theme';
-import { savePasscode } from '../../services/authService';
+import { savePasscode, verifyPasscode } from '../../services/authService';
+import { ensureLocalUser } from '../../services/userService';
+import { recordFailedUnlock } from '../../services/securityService';
+import { loadSettings } from '../../services/settingsService';
+import { captureIntruderPhoto } from '../../services/intruderCaptureService';
+import { openLockedPackage } from '../../services/installedAppsService';
+import {
+  DEFAULT_MAX_FAILED_ATTEMPTS,
+  shouldCaptureIntruder,
+  wrongPasscodeMessage,
+} from '../../utils/unlockPolicy';
+import {
+  recordSessionFailedAttempt,
+  resetSessionFailedAttempts,
+} from '../../utils/unlockSession';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Passcode'> & {
   onComplete?: () => void;
   mode?: 'create' | 'unlock' | 'change';
+  pendingPackage?: string | null;
 };
 
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
 
-export function PasscodeScreen({ navigation, onComplete, mode = 'create' }: Props) {
+export function PasscodeScreen({
+  navigation,
+  onComplete,
+  mode = 'create',
+  pendingPackage = null,
+}: Props) {
   const [value, setValue] = useState('');
+  const [maxAttempts, setMaxAttempts] = useState(DEFAULT_MAX_FAILED_ATTEMPTS);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    ensureLocalUser()
+      .then(user => loadSettings(user.id))
+      .then(settings => setMaxAttempts(settings.maxFailedAttempts))
+      .catch(() => setMaxAttempts(DEFAULT_MAX_FAILED_ATTEMPTS));
+  }, []);
 
   const title = useMemo(() => {
     if (mode === 'unlock') return 'Unlock LOCKNEST';
@@ -33,6 +62,7 @@ export function PasscodeScreen({ navigation, onComplete, mode = 'create' }: Prop
     }
 
     setValue(current => (current + digit).slice(0, 6));
+    setError(null);
   };
 
   const submit = async () => {
@@ -41,9 +71,47 @@ export function PasscodeScreen({ navigation, onComplete, mode = 'create' }: Prop
     }
 
     try {
+      if (mode === 'unlock') {
+        const valid = await verifyPasscode(value);
+        if (!valid) {
+          const nextAttempt = recordSessionFailedAttempt();
+          const user = await ensureLocalUser();
+          const eventId = await recordFailedUnlock(
+            user.id,
+            pendingPackage ?? undefined,
+            nextAttempt,
+            maxAttempts,
+          );
+          setValue('');
+          setError(wrongPasscodeMessage(nextAttempt, maxAttempts));
+          if (shouldCaptureIntruder(nextAttempt, maxAttempts)) {
+            const capture = await captureIntruderPhoto(eventId);
+            navigation.replace('Intruder', {
+              photoPath: capture.photoPath,
+              cameraError: capture.cameraError,
+            });
+          }
+          return;
+        }
+
+        resetSessionFailedAttempts();
+        onComplete?.();
+        navigation.replace('Dashboard');
+        if (pendingPackage) {
+          try {
+            await openLockedPackage(pendingPackage);
+          } catch {
+            setError('Passcode accepted, but the locked app could not be reopened.');
+          }
+        }
+        return;
+      }
+
       await savePasscode(value);
-    } catch (error) {
-      console.warn('Failed to save passcode:', error);
+    } catch (submitError) {
+      setError('Unable to verify the passcode. Try again.');
+      console.warn('Failed to save passcode:', submitError);
+      return;
     }
 
     onComplete?.();
@@ -55,6 +123,7 @@ export function PasscodeScreen({ navigation, onComplete, mode = 'create' }: Prop
       <View style={styles.screen}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>Enter a 4-6 digit passcode</Text>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
 
         <View style={styles.pinRow}>
           {Array.from({ length: 6 }).map((_, index) => (
@@ -107,6 +176,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     fontWeight: '500',
+  },
+  error: {
+    color: colors.red,
+    textAlign: 'center',
+    marginTop: 12,
+    fontSize: 14,
+    fontWeight: '600',
   },
   pinRow: {
     flexDirection: 'row',

@@ -14,36 +14,51 @@ import {
   findCatalogApp,
 } from '../constants/apps';
 import {EVENT_TYPES} from '../constants/events';
+import {listInstalledApps} from './installedAppsService';
 
 export async function seedDefaultLockedApps(userId: number): Promise<void> {
   const existing = await getProtectedAppsByUser(userId);
-  if (existing.length > 0) {
-    return;
-  }
 
-  for (const name of DEFAULT_LOCKED_APPS) {
-    const catalog = findCatalogApp(name);
-    if (!catalog) {
+  for (const catalog of APP_CATALOG) {
+    const current = existing.find(
+      app => app.package_name === catalog.packageName,
+    );
+
+    if (current) {
       continue;
     }
+
+    const shouldLock = DEFAULT_LOCKED_APPS.includes(catalog.name);
     const id = await createProtectedApp(
       userId,
       catalog.packageName,
       catalog.name,
     );
+    if (!shouldLock) {
+      await updateProtectedApp(id, catalog.name, false);
+    }
     await createLockSettings(id, 'passcode', true, 5, true);
-    await createSecurityEvent(
-      userId,
-      EVENT_TYPES.APP_LOCKED,
-      catalog.packageName,
-      `${catalog.name} locked`,
-    );
+    if (shouldLock) {
+      await createSecurityEvent(
+        userId,
+        EVENT_TYPES.APP_LOCKED,
+        catalog.packageName,
+        `${catalog.name} locked`,
+      );
+    }
   }
 }
 
 export async function listProtectedApps(
   userId: number,
 ): Promise<ProtectedApp[]> {
+  const installedApps = await listInstalledApps();
+  const existing = await getProtectedAppsByUser(userId);
+  for (const app of installedApps) {
+    if (!existing.some(row => row.package_name === app.packageName)) {
+      await createProtectedApp(userId, app.packageName, app.appName);
+    }
+  }
   return getProtectedAppsByUser(userId);
 }
 

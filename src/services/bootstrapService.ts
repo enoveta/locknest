@@ -44,7 +44,7 @@ export async function bootstrapApp(): Promise<BootstrapState> {
     lockedApps,
     stayModeActive,
     guestModeActive,
-    notifications,
+    notifications: settings.notificationsEnabled ? notifications : [],
     events,
     hasPasscode: passcodeSet,
     onboardingComplete,

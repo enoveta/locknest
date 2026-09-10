@@ -1,15 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
 import { LockNestButton } from '../../components/LockNestButton';
 import { LockNestCard } from '../../components/LockNestCard';
 import { LockNestHeader } from '../../components/LockNestHeader';
 import { colors, sharedStyles, spacing } from '../../theme';
+import { ensureLocalUser } from '../../services/userService';
+import { loadLatestIntruderPhoto } from '../../services/intruderCaptureService';
+import { toFileUri } from '../../utils/unlockPolicy';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Intruder'>;
 
-export function IntruderDetectedScreen({ navigation }: Props) {
+export function IntruderDetectedScreen({ navigation, route }: Props) {
+  const [photoPath, setPhotoPath] = useState(route.params?.photoPath);
+  const cameraError = route.params?.cameraError;
+
+  useEffect(() => {
+    if (photoPath) {
+      return;
+    }
+
+    ensureLocalUser()
+      .then(user => loadLatestIntruderPhoto(user.id))
+      .then(path => {
+        if (path) {
+          setPhotoPath(path);
+        }
+      })
+      .catch(() => undefined);
+  }, [photoPath]);
+
   return (
     <View style={sharedStyles.container}>
       <View style={styles.container}>
@@ -23,9 +44,15 @@ export function IntruderDetectedScreen({ navigation }: Props) {
 
         <LockNestCard style={styles.details}>
           <Text style={styles.label}>Status</Text>
-          <Text style={styles.value}>Monitoring active</Text>
+          <Text style={styles.value}>Monitoring active. Access remains blocked.</Text>
           <Text style={styles.label}>Evidence</Text>
-          <Text style={styles.value}>Captured timestamps and security event references are being preserved.</Text>
+          {photoPath ? (
+            <Image source={{uri: toFileUri(photoPath)}} style={styles.photo} />
+          ) : (
+            <Text style={styles.value}>
+              {cameraError ?? 'No photo was stored. Event timestamps are still saved.'}
+            </Text>
+          )}
         </LockNestCard>
 
         <View style={styles.actions}>
@@ -81,6 +108,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginTop: 6,
+  },
+  photo: {
+    width: '100%',
+    height: 220,
+    borderRadius: 16,
+    marginTop: 10,
+    backgroundColor: colors.panel,
   },
   actions: {
     gap: 12,

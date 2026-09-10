@@ -239,6 +239,64 @@ export async function markEvidenceAsViewed(
 }
 
 /**
+ * Get the newest undeleted intruder evidence for a user.
+ */
+export async function getLatestIntruderEvidence(
+  userId: number,
+): Promise<IntruderEvidence | null> {
+  const result = await database.execute(
+    `
+      SELECT evidence.*
+      FROM intruder_evidence evidence
+      INNER JOIN security_events events
+        ON events.id = evidence.security_event_id
+      WHERE events.user_id = ?
+        AND evidence.deleted_at IS NULL
+      ORDER BY evidence.captured_at DESC
+      LIMIT 1;
+    `,
+    [userId],
+  );
+
+  return (
+    (result.rows?.[0] as unknown as IntruderEvidence | undefined) ?? null
+  );
+}
+
+/**
+ * Mark older undeleted evidence as deleted, keeping the newest records.
+ */
+export async function markOldEvidenceDeleted(
+  keepCount: number,
+): Promise<string[]> {
+  const result = await database.execute(
+    `
+      SELECT id, file_path
+      FROM intruder_evidence
+      WHERE deleted_at IS NULL
+      ORDER BY captured_at DESC;
+    `,
+  );
+  const rows = (result.rows ?? []) as unknown as Array<{
+    id: number;
+    file_path: string;
+  }>;
+  const extra = rows.slice(Math.max(keepCount, 0));
+  const now = new Date().toISOString();
+  for (const row of extra) {
+    await database.execute(
+      `
+        UPDATE intruder_evidence
+        SET deleted_at = ?
+        WHERE id = ?;
+      `,
+      [now, row.id],
+    );
+  }
+  return extra.map(row => row.file_path);
+}
+
+/**
  * Mark intruder evidence as deleted.
  *
  * The actual file should be removed separately from

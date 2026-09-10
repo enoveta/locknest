@@ -1,6 +1,39 @@
+import java.net.Inet4Address
+import java.net.NetworkInterface
+
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+
+def detectLanIp() {
+    def envHost = System.getenv("REACT_NATIVE_PACKAGER_HOSTNAME")
+    if (envHost != null && !envHost.trim().isEmpty()) {
+        return envHost.trim()
+    }
+
+    def candidates = []
+    NetworkInterface.networkInterfaces.each { nic ->
+        if (!nic.up || nic.loopback) {
+            return
+        }
+        def name = ((nic.displayName ?: "") + " " + (nic.name ?: "")).toLowerCase()
+        if (name.contains("virtual") || name.contains("vmware") || name.contains("vbox") ||
+            name.contains("hyper-v") || name.contains("wsl") || name.contains("docker") ||
+            name.contains("loopback") || name.contains("bluetooth") || name.contains("vethernet")) {
+            return
+        }
+        nic.inetAddresses.each { addr ->
+            if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                candidates << addr.hostAddress
+            }
+        }
+    }
+
+    return candidates.find { it.startsWith("192.168.") }
+        ?: candidates.find { it.startsWith("10.") }
+        ?: candidates.find { it ==~ /^172\.(1[6-9]|2[0-9]|3[0-1])\..*/ }
+        ?: (candidates ? candidates[0] : "")
+}
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -76,14 +109,27 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 
     namespace "com.locknest"
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         applicationId "com.locknest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
     signingConfigs {
         debug {
@@ -96,6 +142,9 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            def metroHost = detectLanIp()
+            println "Debug Metro host: ${metroHost ?: '(none)'}"
+            buildConfigField "String", "METRO_HOST", "\"${metroHost}\""
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

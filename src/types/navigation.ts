@@ -8,7 +8,7 @@ export type RootStackParamList = {
   StayMode: undefined;
   GuestMode: undefined;
   VoiceAssistant: undefined;
-  Intruder: undefined;
+  Intruder: {photoPath?: string; cameraError?: string} | undefined;
   SecurityEvents: undefined;
   Settings: undefined;
   Profile: undefined;

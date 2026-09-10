@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/navigation';
@@ -8,6 +8,7 @@ import { LockNestHeader } from '../../components/LockNestHeader';
 import { colors, sharedStyles, spacing } from '../../theme';
 import { EXAMPLE_VOICE_COMMANDS, executeVoiceCommand } from '../../services/voiceCommandService';
 import { ensureLocalUser } from '../../services/userService';
+import { loadSettings } from '../../services/settingsService';
 
 const phases = {
   idle: 'Ready',
@@ -22,10 +23,29 @@ type Props = NativeStackScreenProps<RootStackParamList, 'VoiceAssistant'>;
 export function VoiceAssistantScreen({ navigation }: Props) {
   const [phase, setPhase] = useState<'idle' | 'listening' | 'processing' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('Tap the mic and say a command.');
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+
+  useEffect(() => {
+    ensureLocalUser()
+      .then(user => loadSettings(user.id))
+      .then(settings => {
+        setVoiceEnabled(settings.voiceEnabled);
+        if (!settings.voiceEnabled) {
+          setPhase('error');
+          setMessage('Voice assistant is turned off in Settings.');
+        }
+      })
+      .catch(() => undefined);
+  }, []);
 
   const examples = useMemo(() => EXAMPLE_VOICE_COMMANDS, []);
 
   const handleCommand = async (raw: string) => {
+    if (!voiceEnabled) {
+      setPhase('error');
+      setMessage('Voice assistant is turned off in Settings.');
+      return;
+    }
     setPhase('listening');
     setMessage('Listening...');
 

@@ -16,6 +16,7 @@ import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { VoiceAssistantScreen } from '../screens/voice/VoiceAssistantScreen';
 import { AppLockedScreen } from '../screens/appLock/AppLockedScreen';
 import { hasPasscode, isOnboardingComplete } from '../services/authService';
+import { clearPendingLockedPackage, getPendingLockedPackage } from '../services/installedAppsService';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,18 +24,20 @@ export function AppNavigator() {
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false);
   const [hasPasscodeValue, setHasPasscodeValue] = useState(false);
   const [isBooting, setIsBooting] = useState(true);
+  const [pendingLockedPackage, setPendingLockedPackage] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
 
-    Promise.all([isOnboardingComplete(), hasPasscode()])
-      .then(([onboardingComplete, passcodeExists]) => {
+    Promise.all([isOnboardingComplete(), hasPasscode(), getPendingLockedPackage()])
+      .then(([onboardingComplete, passcodeExists, pendingPackage]) => {
         if (!active) {
           return;
         }
 
         setHasSeenOnboarding(onboardingComplete);
         setHasPasscodeValue(passcodeExists);
+        setPendingLockedPackage(pendingPackage);
         setIsBooting(false);
       })
       .catch(error => {
@@ -62,8 +65,8 @@ export function AppNavigator() {
       return 'Passcode';
     }
 
-    return 'Dashboard';
-  }, [hasPasscodeValue, hasSeenOnboarding, isBooting]);
+    return pendingLockedPackage ? 'Passcode' : 'Dashboard';
+  }, [hasPasscodeValue, hasSeenOnboarding, isBooting, pendingLockedPackage]);
 
   return (
     <NavigationContainer>
@@ -90,10 +93,15 @@ export function AppNavigator() {
           {props => (
             <PasscodeScreen
               {...props}
-              mode="create"
+              mode={pendingLockedPackage ? 'unlock' : 'create'}
+              pendingPackage={pendingLockedPackage}
               onComplete={() => {
                 setHasPasscodeValue(true);
                 setIsBooting(false);
+                if (pendingLockedPackage) {
+                  clearPendingLockedPackage();
+                  setPendingLockedPackage(null);
+                }
               }}
             />
           )}
