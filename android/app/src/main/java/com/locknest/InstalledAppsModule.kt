@@ -95,7 +95,7 @@ class InstalledAppsModule(context: ReactApplicationContext) :
     promise.resolve(null)
   }
 
-  @ReactMethod
+  @ReactMethod(isBlockingSynchronousMethod = true)
   fun getPendingLockedPackage(): String? =
     preferences().getString(AppLockAccessibilityService.PENDING_PACKAGE, null)
 

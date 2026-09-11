@@ -1,4 +1,29 @@
 {
   "name": "LockNest",
-  "displayName": "LockNest"
+  "displayName": "LockNest",
+  "expo": {
+    "name": "LockNest",
+    "slug": "locknest",
+    "owner": "enovetainc",
+    "scheme": "locknest",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "android": {
+      "package": "com.locknest",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#050810"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.locknest"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ddbe1727-54bf-4ce5-b686-2aa219927f2a"
+      }
+    }
+  }
 }
